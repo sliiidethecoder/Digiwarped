@@ -1,0 +1,27 @@
+image gryphairmon friendly = LiveComposite(
+    (795, 581),
+    (0, 0), HBox("gryphairmon wings"),
+    (200, 0), "gryphairmon_body_friendly.png",
+    (293, 110), "gryphairmon eyes friendly",
+    )
+
+image gryphairmon eyes friendly:
+    "gryphairmon_eyes_friendly.png"
+    choice:
+        4.5
+    choice:
+        3.5
+    choice:
+        1.5
+    # This randomizes the time between blinking.
+    "gryphairmon_eyes_closed.png"
+    .05
+    repeat
+
+image gryphairmon wings = At("gryphairmon_wings.png", flap)
+
+transform flap:
+    yzoom 1 xalign 0
+    linear 5 xzoom 0.7 xalign 0.35
+    linear 5 xzoom 1 xalign 0
+    repeat
