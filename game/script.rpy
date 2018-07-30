@@ -41,7 +41,6 @@ image lightning:
         choice:
             "lightning-3058.png"
 
-
 transform lightning_flashes:
         zoom 2
         parallel:
@@ -59,6 +58,39 @@ transform lightning_flashes:
             linear 2
         repeat
 
+transform snowfall:
+    contains:
+        subpixel True
+        yalign 1.0
+        xalign 0.5
+        HBox ("snowfall1.png", "snowfall1.png")
+        linear 20.0 yalign -1.0
+
+    contains:
+        subpixel True
+        yalign 2.0
+        xalign 0.5
+        alpha .5
+        HBox ("snowfall1.png", "snowfall1.png")
+        linear 22.0 yalign -1.0
+        repeat
+
+    contains:
+        subpixel True
+        yalign 2.0
+        xalign 0.5
+        alpha .7
+        HBox ("snowfall1.png", "snowfall1.png")
+        linear 32.0 yalign -1.0
+        repeat
+    contains:
+        subpixel True
+        yalign 2.0
+        xalign 0.5
+        alpha .4
+        HBox ("snowfall1.png", "snowfall1.png")
+        linear 28.0 yalign -1.0
+        repeat
 
 # Declare characters used by this game. The color argument colorizes the
 # name of the character.
@@ -119,9 +151,44 @@ image gryphairmon friendly:
         .005
         repeat
 
-
-
-
+image gryphairmon skeptical:
+    contains:
+        "gryphairmon_wings.png"
+        xalign 0.5
+        yalign -0.05
+        yzoom 1
+        linear 3 xzoom 0.8 xalign 0.5
+        linear 3 xzoom 1 xalign 0.5
+        repeat
+    contains:
+        yalign 0.283
+        xalign 0.5
+        "gryphairmon_body_skeptical.png"
+    contains:
+        xalign 0.495
+        yalign 0.263
+        yzoom 1
+        "gryphairmon_eyes_skeptical.png"
+        choice:
+            4.5
+        choice:
+            3.5
+        choice:
+            1.5
+        # This randomizes the time between blinking.
+        yzoom .8
+        yalign 0.272
+        "gryphairmon_eyes_skeptical.png"
+        .005
+        yzoom 1
+        yalign 0.289
+        "gryphairmon_eyes_closed.png"
+        .03
+        yzoom .8
+        yalign 0.272
+        "gryphairmon_eyes_skeptical.png"
+        .005
+        repeat
 
 
 
@@ -239,6 +306,7 @@ label start:
             jump youdontknow
 
     label cantrememberyou:
+        show gryphairmon skeptical
         y "Really? Well… I have never seen a Digimon like you either."
 
         menu:
@@ -249,6 +317,7 @@ label start:
                 jump imahuman0
 
         label imahuman0:
+        show gryphairmon friendly
         g "Ohhhh! I’ve heard stories about humans! I should have known that you are not a Digimon! I mean how can you fight without claws and with such blunt teeth?"
 
         jump youdontknow
@@ -267,6 +336,7 @@ label start:
             jump youdontknow
 
     label youdontknow:
+        show gryphairmon friendly
         "Ah I see! You don’t know what a Digimon is, right? Well, for starters you are in the Digital World! Digiworld for short. And this World is inhabited by digital monsters called Digimon!"
 
         "The little Digimon that just welcomed you are Baby-Digimon. Digimon can digivolve and become stronger, reaching higher levels. I’m a Rookie Digimon and I take care of the little Baby-Digimon"
@@ -318,6 +388,8 @@ label start:
         zoom 1.2
         xalign 0.5
         yalign -0.2
+
+    show image snowfall
 
     g "Brrrrr, so cold! Look we are in front of the majestic Sanctuary. Don’t be shy, just go inside! The holy Digimon will be in there I have to go back now and look after the Baby-Digimon. Good luck!"
 
@@ -393,12 +465,18 @@ label start:
     h "There! It will now allow you to get around in the Digital World. Feel free to explore as much as you like!"
 
     "You take a look at your digivice. Where do you want to go?"
-    show digivice_tri:
-        truecenter zoom 4
+    jump whereto
+    label whereto:
+        show digivice_tri:
+            truecenter zoom 4
 
-    menu:
-        "The bridge to the temple":
-            jump badlands
+        menu:
+            "The snowfields":
+                jump snowfields
+
+            "The bridge to the temple":
+                jump badlands
+
 
     #monomons route, badlands ----------
     label badlands:
@@ -635,6 +713,59 @@ label start:
 
         "You smile and tell Monomon that you will try your best. You then wave goodbye and part ways… They seemed like a nice digimon but the place they were in, you let your thoughts wonder on why Monomon lives in the Badlands alone as you head back to the village."
 
+        jump whereto
+
+    #weremons route, snowfields ----------
+    label snowfields:
+        scene bg snowfields:
+            truecenter
+            zoom 1.2
+
+        show image snowfall
+        "You peacefully walk through the snow, marvelling at the mountanous landscape."
+        with flash
+        "suddenly a snowball hits you right in the face. You wipe the snow off your face and try to find who or what threw it at you."
+
+        "You can't see anyone."
+
+        menu:
+            "Keep looking":
+                jump keeplooking
+
+            "Leave before you get hit by another one":
+                jump leavebeforeyougethit
+
+        label leavebeforeyougethit:
+            "You make a run for it before another snowball appears."
+            jump whereto
+
+        label keeplooking:
+            show weremon:
+                truecenter
+                zoom 0.5
+            "You notice a wolf-like digimon eagrly digging in the snow. They must be the one that threw the snowball."
+            menu:
+                "Throw snowball back":
+                    jump throwback
+
+                "Tell him not to throw any more snowballs at you":
+                    jump dontthrow
+            label throwback:
+                with flash
+                w "Hey, why'd you do that?!"
+
+                "You explain that you were settling the score with him and throw another snowball at him."
+                with flash
+
+                "You both spend the next few minutes having a snowball battle."
+
+                "After a little while you say bye and walk away"
+
+                jump whereto
+            label dontthrow:
+                "The Digimon throws another snowball in your face. You decide to leave for the day so you wouldn’t get anymore snowballs in your face."
+
+                jump whereto
 
     # This ends the game.
 

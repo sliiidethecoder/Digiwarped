@@ -1,9 +1,9 @@
-Sat Jul 28 19:40:55 2018
+Sat Jul 28 21:47:58 2018
 Darwin-16.7.0-x86_64-i386-64bit
 Ren'Py 7.0.0.196
  
 
-Bootstrap to the start of init.init took 0.07s
+Bootstrap to the start of init.init took 0.08s
 Early init took 0.01s
 Loader init took 0.01s
 Loading error handling took 0.02s
@@ -20,14 +20,14 @@ Cleaning cache took 0.00s
 Making clean stores took 0.00s
 Initial gc. took 0.02s
 DPI scale factor: 1.000000
-Creating interface object took 0.12s
+Creating interface object took 0.15s
 Cleaning stores took 0.00s
 Init translation took 0.02s
-Build styles took 0.00s
+Build styles took 0.01s
 Load screen analysis took 0.02s
 Analyze screens took 0.00s
 Save screen analysis took 0.00s
-Prepare screens took 0.06s
+Prepare screens took 0.07s
 Save pyanalysis. took 0.00s
 Save bytecode. took 0.00s
 Running _start took 0.00s
@@ -37,7 +37,7 @@ Interface start took 0.02s
 primary display bounds: (0, 0, 1680, 1050)
 swap interval: 1 frames
 Windowed mode.
-Screen sizes: virtual=(1280, 720) physical=(1337, 752) drawable=(2674, 1504)
+Screen sizes: virtual=(1280, 720) physical=(1392, 783) drawable=(2784, 1566)
 Vendor: 'ATI Technologies Inc.'
 Renderer: 'AMD Radeon Pro 455 OpenGL Engine'
 Version: '2.1 ATI-1.51.8'
@@ -192,11 +192,11 @@ Texture testing:
 - 512px textures work.
 - 1024px textures work.
 - 2048px textures work.
-Total time until interface ready: 0.845439910889s
+Total time until interface ready: 0.968728065491s
 - Target is 5 frames in 0.333333333333 seconds.
 - Frame drawn at 0.000000 seconds.
-- Frame drawn at 0.012349 seconds.
-- Frame drawn at 0.026617 seconds.
-- Frame drawn at 0.043508 seconds.
-- Frame drawn at 0.061133 seconds.
-- 0.061133 seconds to render 5 frames.
+- Frame drawn at 0.010058 seconds.
+- Frame drawn at 0.029492 seconds.
+- Frame drawn at 0.035673 seconds.
+- Frame drawn at 0.053472 seconds.
+- 0.053472 seconds to render 5 frames.

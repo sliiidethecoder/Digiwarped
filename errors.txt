@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/script.rpy", line 304: ATL statement contains two expressions in a row; is one of them a misspelled property? If not, separate them with pass.
-    bottom right
-                ^
+File "game/script.rpy", line 181: Line is indented, but the preceding ATL statement does not expect a block. Please check this line's indentation.
+    "gryphairmon_wings.png"
+    ^
 
 Ren'Py Version: Ren'Py 7.0.0.196
-Fri Jul 27 23:39:03 2018
+Sat Jul 28 21:43:58 2018
