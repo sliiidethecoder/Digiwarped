@@ -1,26 +1,28 @@
 ﻿I'm sorry, but an uncaught exception occurred.
 
-Compiling ATL code at game/script.rpy:94
-Exception: Expression u'"gryphairmon_eyes_friendly.png"' is not an ATL transform, and so cannot be included in an ATL interpolation.
+While running game code:
+  File "game/script.rpy", line 843, in script
+    if $ corealmondaycount == 0:
+  File "game/script.rpy", line 843, in <module>
+    if $ corealmondaycount == 0:
+NameError: name 'corealmondaycount' is not defined
 
 -- Full Traceback ------------------------------------------------------------
 
 Full traceback:
-  File "/Applications/renpy-7.0.0-sdk/renpy/bootstrap.py", line 306, in bootstrap
-    renpy.main.main()
-  File "/Applications/renpy-7.0.0-sdk/renpy/main.py", line 454, in main
-    renpy.atl.compile_all()
-  File "/Applications/renpy-7.0.0-sdk/renpy/atl.py", line 231, in compile_all
-    i.compile()
-  File "/Applications/renpy-7.0.0-sdk/renpy/atl.py", line 481, in compile
-    block = self.atl.compile(self.context)
-  File "/Applications/renpy-7.0.0-sdk/renpy/atl.py", line 676, in compile
-    statements = [ i.compile(ctx) for i in self.statements ]
-  File "/Applications/renpy-7.0.0-sdk/renpy/atl.py", line 944, in compile
-    raise Exception("Expression %r is not an ATL transform, and so cannot be included in an ATL interpolation." % expr)
-Exception: Expression u'"gryphairmon_eyes_friendly.png"' is not an ATL transform, and so cannot be included in an ATL interpolation.
+  File "game/script.rpy", line 843, in script
+    if $ corealmondaycount == 0:
+  File "/Applications/renpy-7.0.0-sdk/renpy/ast.py", line 1729, in execute
+    if renpy.python.py_eval(condition):
+  File "/Applications/renpy-7.0.0-sdk/renpy/python.py", line 1943, in py_eval
+    return py_eval_bytecode(code, globals, locals)
+  File "/Applications/renpy-7.0.0-sdk/renpy/python.py", line 1936, in py_eval_bytecode
+    return eval(bytecode, globals, locals)
+  File "game/script.rpy", line 843, in <module>
+    if $ corealmondaycount == 0:
+NameError: name 'corealmondaycount' is not defined
 
 Darwin-16.7.0-x86_64-i386-64bit
 Ren'Py 7.0.0.196
 Digiwarped_01 1.0
-Fri Jul 27 22:39:20 2018
+Sat Aug  4 23:40:04 2018

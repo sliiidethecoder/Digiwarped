@@ -26,30 +26,20 @@ transform fog:
         repeat
 
 image lightning:
-        choice:
-            "lightning-3031.png"
-        choice:
-            "lightning-3038.png"
-        choice:
-            "lightning-3044.png"
-        choice:
-            "lightning-3045.png"
-        choice:
-            "lightning-3048.png"
-        choice:
-            "lightning-3056.png"
-        choice:
-            "lightning-3058.png"
+    "lightning-3058.png"
 
 transform lightning_flashes:
         zoom 2
         parallel:
             yalign 0.0
             choice:
+                xzoom 1
                 xalign 0.9
             choice:
+                xzoom 1
                 xalign 0.5
             choice:
+                xzoom -1
                 xalign 0.1
         parallel:
             alpha 0.0
@@ -57,6 +47,20 @@ transform lightning_flashes:
             linear 0.25 alpha 0.0
             linear 2
         repeat
+
+image glittering:
+        contains:
+            "glitter1.png"
+            alpha 0.0
+            linear 1 alpha 1.0
+            linear 1 alpha 0.0
+            repeat
+        contains:
+            "glitter2.png"
+            alpha 1.0
+            linear 1 alpha 0.0
+            linear 1 alpha 1.0
+            repeat
 
 transform snowfall:
     contains:
@@ -108,21 +112,27 @@ define m = Character("Monomon", color = "#ff0000")
 
 define w = Character("Weremon", color = "#f7cd62")
 
+define c = Character("Corealmon", color = "#bee8df")
+
+define f = Character("Furizumon", color = "#c6fbff")
 
 image monomon = "monomon_temp.png"
 image monomon red = "monomon_temp red.png"
 
+image gryphairmon wings = At("gryphairmon_wings.png", flap)
+
+transform flap:
+    xzoom 1 yzoom 1 xalign 0.5
+    linear 3 xzoom 0.8
+    linear 3 xzoom 1
+    repeat
+
 image gryphairmon friendly:
     contains:
-        "gryphairmon_wings.png"
-        xalign 0.5
-        yalign -0.05
-        yzoom 1
-        linear 3 xzoom 0.8 xalign 0.5
-        linear 3 xzoom 1 xalign 0.5
-        repeat
+        yanchor 0.15
+        "gryphairmon wings"
     contains:
-        yalign 0.3
+        yalign 0.24
         xalign 0.5
         "gryphairmon_body_friendly.png"
     contains:
@@ -153,15 +163,10 @@ image gryphairmon friendly:
 
 image gryphairmon skeptical:
     contains:
-        "gryphairmon_wings.png"
-        xalign 0.5
-        yalign -0.05
-        yzoom 1
-        linear 3 xzoom 0.8 xalign 0.5
-        linear 3 xzoom 1 xalign 0.5
-        repeat
+        yanchor 0.15
+        "gryphairmon wings"
     contains:
-        yalign 0.283
+        yalign 0.266
         xalign 0.5
         "gryphairmon_body_skeptical.png"
     contains:
@@ -190,7 +195,45 @@ image gryphairmon skeptical:
         .005
         repeat
 
+image holydigi wings = At("holydigi_wings.png", flap)
 
+image phophetwulvermon praying:
+    contains:
+        yanchor -0.02
+        "holydigi wings"
+    contains:
+        yalign 0.45
+        xalign 0.5
+        "holydigi_body_cheerful.png"
+    contains:
+        xalign 0.5
+        yalign -0.210
+        yzoom 1
+        "holydigi_eyes_cheerful.png"
+        choice:
+            4.5
+        choice:
+            3.5
+        choice:
+            1.5
+        # This randomizes the time between blinking.
+        yzoom .8
+        yalign -0.180
+        "holydigi_eyes_cheerful.png"
+        .02
+        yzoom 1
+        yalign -0.150
+        "holydigi_eyes_closed.png"
+        .03
+        yzoom .8
+        yalign -0.180
+        "holydigi_eyes_cheerful.png"
+        .01
+        repeat
+
+
+init:
+    $ corealmondaycount = 0
 
 
 # The game starts here.
@@ -200,17 +243,19 @@ label start:
     scene black
     with slowflash
     scene black
+    jump whereto
 
-    python:
-        name = renpy.input("Enter your name:")
-        name = name.strip()
+    label intro:
+        python:
+            name = renpy.input("Enter your name:")
+            name = name.strip()
 
-        if not name:
-             name = "Aki"
+            if not name:
+                 name = "Aki"
 
-    "You have logged in as [name]!"
+        "You have logged in as [name]!"
 
-    window hide fade
+        window hide fade
 
     # Show a background. This uses a placeholder by default, but you can
     # add a file (named either "bg room.png" or "bg room.jpg") to the
@@ -268,8 +313,8 @@ label start:
 
     show gryphairmon friendly:
         xalign 0.5
-        yalign 0.2
-        zoom 1.4
+        yalign 0.1
+        zoom .7
 
     with fade
 
@@ -376,33 +421,39 @@ label start:
 
     show gryphairmon friendly:
         left
-        xalign -1.5
-        yalign 1.3
-        zoom 0.9
+        xanchor 0.5
+        ypos 0.65
+        xpos 0.3
+        zoom 0.45
 
     g "Oh Great, you are ready! Now come, I will take you to the Sanctuary in Freezeland. I should warn you, It will be very cold!"
 
     scene bg sanctuary_entrance:
         zoom 1.3
     show gryphairmon friendly:
-        zoom 1.2
+        yanchor 0.6
+        zoom .6
         xalign 0.5
-        yalign -0.2
+        ypos 0.6
 
     show image snowfall
 
     g "Brrrrr, so cold! Look we are in front of the majestic Sanctuary. Don’t be shy, just go inside! The holy Digimon will be in there I have to go back now and look after the Baby-Digimon. Good luck!"
 
     hide gryphairmon friendly
-    scene bg sanctuary_hall:
-        truecenter zoom 0.5
-    with slowflash0
-    show prophet_wulvermon:
-        truecenter zoom 0.2
+    label sanctuary:
+        scene bg sanctuary_hall:
+            truecenter zoom 0.5
+        with slowflash0
+        show glittering:
+            zoom 0.8
 
-    "There is a Digimon in the middle of the hall with it’s back toward you. It looks as if they might be praying to the statue."
+        show phophetwulvermon praying:
+            truecenter zoom 0.5
 
-    "As you walk towards it the Digimon turns around with it’s eyes closed. He starts talking in a relaxed pace."
+        "There is a Digimon in the middle of the hall with it’s back toward you. It looks as if they might be praying to the statue."
+
+        "As you walk towards it the Digimon turns around with it’s eyes closed. He starts talking in a relaxed pace."
 
     h "I have foreseen your arrival, destined one"
 
@@ -410,8 +461,17 @@ label start:
     Thou who shall lift the veil of darkness from this world and bring back light"
 
     h "I welcome you on behalf of the Digimon gods, and shall tell you about the quest bestowed upon you"
-
+    show black:
+        alpha 0.7
+    play sound "sounds/thunder2.mp3"
+    show white:
+        alpha 0.0
+        linear 0.25 alpha 0.2
+        linear 0.25 alpha 0.0
+        linear 2
+        repeat
     show lightning at lightning_flashes
+
     show delegamon_silhouette:
         truecenter zoom 1.3
         on show:
@@ -437,18 +497,24 @@ label start:
 
     label ofcourseiwill:
         "That’s a relief to hear!"
+        jump explanation
 
     label whatdoido:
         "Oh of course! I’ll explain"
+        jump explanation
 
     label nothx:
         "*gasp* But you are the destined one! Please hear me out."
+        jump explanation
 
-    hide lightning_flashes
-    hide delegamon_silhouette
-    with fade
+    label explanation:
+        hide lightning at lightning_flashes
+        hide delegamon_silhouette
+        hide white
+        hide black
+        with fade
 
-    h "You are the only one who can help us. In 32 days, the portal to the other world will open and evil will strike. You have until then for saving not just one world, but two."
+        h "You are the only one who can help us. In 32 days, the portal to the other world will open and evil will strike. You have until then for saving not just one world, but two."
 
     h "And how do you do this you ask? You need to find a partner, a Digimon who you’re compatible with."
 
@@ -471,11 +537,21 @@ label start:
             truecenter zoom 4
 
         menu:
-            "The snowfields":
+            "Intro":
+                jump intro
+
+            "Snowfields":
                 jump snowfields
 
-            "The bridge to the temple":
+            "Bridge to temple":
                 jump badlands
+
+            "Oasis":
+                jump oasis
+
+            "Freezetown":
+                jump freezetown
+
 
 
     #monomons route, badlands ----------
@@ -484,6 +560,8 @@ label start:
                 truecenter zoom .7
 
         with fade
+        window hide fade
+
 
         centered "Seeing the Temple in the distance you decided to walk towards it, you think there might be people there, or at least someone who could help you."
 
@@ -766,6 +844,166 @@ label start:
                 "The Digimon throws another snowball in your face. You decide to leave for the day so you wouldn’t get anymore snowballs in your face."
 
                 jump whereto
+
+    #corealmons route, oasis -----------
+    label oasis:
+        if corealmondaycount == 0:
+            scene bg desert0:
+                zoom 1.2
+            with flash
+
+            "A calm-looking sea of sand is laid out in front of you as everything comes into view. Looking around, you see a little oasis. The heat is already getting to you, but you wonder what could possibly be out here."
+
+            menu:
+                "Go to the oasis":
+                    jump gotooasis
+
+                "Head back":
+                    jump whereto
+
+            label gotooasis:
+                "You start walking, curiosity getting the better of you as your legs carry you to the small lake."
+
+                scene bg oasis:
+                    zoom 1.2
+                with dissolve
+
+                "Once you reach the pool you immediately feel cooler as the shade of the palm trees wash over you. You enjoy the warm breeze before something grabs your attention, a splash in the water."
+
+            menu:
+                "Investigate":
+                    jump investigate
+
+                "Head back":
+                    jump whereto
+
+            label investigate:
+                $ corealmondaycount += 1
+
+                scene cg splash
+                with flash
+
+                "Cautiously, you walk closer to the lake before something bursts out, drenching you in water."
+
+                "It takes you a moment to gather yourself after the sudden movement, but you look into the water to see a pair of eyes looking guiltily at you."
+
+                scene bg oasis:
+                    zoom 1.2
+                with dissolve
+
+                show corealmon:
+                    zoom 0.5
+                    xalign 0.5
+                    yalign 1
+                    alpha 0
+                    linear 2 yalign 0.5 alpha 1
+
+                "They slowly rise as the creature makes it's way out of the water, revealing a blue seal-looking thing with a seashell mounted on it's head."
+
+                "It looks up at you."
+
+                un "I'm really really sorry! I didn't know anyone was here, and it was a nice day, and I just thought- Oh..I'm super sorry, no one ever comes out here so I just thought.."
+
+                "He looks like he's silently kicking himself for being so careless."
+
+                y "It's alright, really! I'm sure I'll dry off fast with the heat."
+
+                "His worried expression changes to one of relief as he smiles awkwardly."
+
+                un "Oh! That was rude of me...I'm Corealmon, what's your name?"
+
+                "You introduce yourself."
+
+                c "How nice, I hate being so blunt but I think you might want to leave. It gets pretty hot in the afternoon."
+
+                "You look up at the sun, and suddenly remember the heat. You decide it probably is a good idea to leave, so you say goodbye and open your map."
+
+                jump whereto
+        if corealmondaycount == 1:
+            scene bg oasis:
+                truecenter
+                zoom 1.2
+            with dissolve
+
+            "You look around expecting to see Corealmon in the water like yesterday, but he's sitting next to the lake on a blanket with the winged wolf you saw when you first came here."
+
+            show corealmon:
+                zoom 0.5
+                xalign 0.7
+
+            "He spots you out of the corner of his eye and smiles, beckoning you closer."
+
+            c "Hello again!"
+
+            "He grins at you while the wolf looks you up and down"
+
+            c "Fancy seeing you here."
+
+            "He chuckles, as he takes a bite of what looks to be a sandwich."
+
+            c "Oh, where are my manners? Your welcome to have a seat and a snack."
+
+            "Corealmon says as he moves at make room for you."
+
+            menu:
+                "Sit and eat with them":
+                    jump sitandeat
+                "Leave":
+                    jump whereto
+
+            label sitandeat:
+                "You sit down and take a sandwich."
+
+                jump whereto
+
+    #furizumons route, freezetown -----------
+    label freezetown:
+        scene bg snow:
+            truecenter
+            zoom 0.8
+        with slowflash
+        show image snowfall
+
+        "It's very cold. Do you wish to keep going?"
+        menu:
+            "Yes":
+                jump yeskeepgoing
+            "No":
+                jump nodontkeep
+
+        label yeskeepgoing:
+            show white:
+                alpha 0
+                linear 3 alpha 1
+
+            "You continue through the icy landscape, only to succumb to the cold and black out…"
+
+            centered "{color=#477d82}Hey, Wake up! C’mon, wake up!{/color}"
+
+            scene cg furizuappears:
+                truecenter
+            show white:
+                alpha 1
+                linear 3 alpha 0
+
+            "That was a close one, kid. Your skin was cold as ice."
+            jump freezetowntown
+
+        label nodontkeep:
+            "You decide to hunker down for the night. A snowstorm passes overhead, but you are left unharmed."
+
+        label freezetowntown:
+            scene bg freezetown:
+                truecenter
+                zoom 0.8
+            with dissolve
+            show furizumon:
+                truecenter
+                zoom 0.55
+            show image snowfall
+
+        f "Hello!"
+
 
     # This ends the game.
 

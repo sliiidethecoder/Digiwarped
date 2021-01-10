@@ -262,6 +262,13 @@ screen quick_menu():
             textbutton _("Q.Load") action QuickLoad()
             textbutton _("Prefs") action ShowMenu('preferences')
 
+        hbox:
+            xalign 0.9
+            yalign 0.05
+
+            text "Days left: "
+            text "0"
+
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
 ## the player has not explicitly hidden the interface.
